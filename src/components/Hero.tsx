@@ -29,7 +29,7 @@ const Hero = () => {
 
         {/* Button Section */}
         <div className='mt-[30px]'>
-          <button className='bg-[#B88E2F] py-6 px-16 font-poppins font-[700] text-[16px] text-[#FFFFFF]'>
+          <button className='bg-[#B88E2F] hover:bg-yellow-700 py-6 px-16 font-poppins font-[700] text-[16px] text-[#FFFFFF]'>
             BUY NOW
           </button>
         </div>

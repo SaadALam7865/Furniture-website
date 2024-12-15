@@ -20,16 +20,16 @@ const FurnitureGallery = () => {
     <div className='h-[312px] w-[451px]  mt-24 ml-3 '>
         <img className='' src="/image2.png" alt="" />
 
-        <img className='mt-8' src="/image4.png" alt="" height={"242px"} width={"344px"}/>
+        <img className='mt-8' src="/image4.png" alt="" height={"242px"} width={"420px"}/>
     </div>
     <div className='h-[195px] flex flex-col items-center w-[392px] mt-28 ml-3 '>
     <img className='h-[242px] w-[344px]' src="/image9.png" alt="" />
         <img className='h-[342px] w-[344px] pb-24 pt-5' src="/image3.png" alt="" />
        
     </div>
-    <div className='h-[290px] w-[348px] mt-24 ml-[4] '>
+    <div className='h-[290px] w-[348px] mt-24  '>
         <img src="/image6.png" alt="" />
-        <img className='mt-5' src="/image7.png" alt="" width={"178px"} height={"242px"} />
+        <img className='mt-5 h-72 w-72' src="/image7.png" alt="" width={"220px"} height={"242"} />
         
 
     </div>

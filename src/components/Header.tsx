@@ -41,6 +41,7 @@ const Header = () => {
           <AiOutlineShoppingCart className="w-[28px] h-[28px] hover:scale-110 " />
         </div>
       </div>
+      
     </div>
   );
 };

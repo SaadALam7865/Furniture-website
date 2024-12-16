@@ -88,6 +88,7 @@ export default function Footer() {
         <div className="text-center text-[#3A3A3A] mt-8">
           © 2024 Funiro. All rights reserved.
         </div>
+        
       </footer>
     );
   }

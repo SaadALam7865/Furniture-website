@@ -1,47 +1,101 @@
-import React from "react";
-import { FaRegUserCircle } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
+"use client";
+
+import Image from "next/image";
+import React, { useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FiMenu } from "react-icons/fi";
 import Link from "next/link";
+import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
 
 const Header = () => {
   return (
-    <div>
-      <div className="w-[1440px] h-[100px] bg-[#FFFFFF] flex">
-        <div className="w-[185px] h-[41px] mt-[29px] ml-[54px] flex items-center  gap-[5px]">
-          {/* logo */}
+    <div className="border-b-0 border-[#edd9a9] bg-[#FFFFFF]">
+      {/* Desktop Header */}
+      <div className="w-full h-[100px] flex items-center justify-between px-4 md:px-8 lg:px-16">
+        {/* Logo */}
+        <div className="flex items-center">
           <img className="w-[50px] h-[32px]" src="/logo.png" alt="logo" />
-          <h1 className="w-[130px] h-[41px] font-Montserrat font-[700] text-[24px] text-[#000000]">
+          <h1 className="font-Montserrat font-[700] text-[24px] text-[#000000]">
             Furniro
           </h1>
         </div>
-        <div className="w-[430px] h-[24px] mt-[10px] ml-[200px]">
-          <ul className="flex ">
-            <Link href="/">
-              <li className="w-[48px] h-[24px] mt-[29px] ml-[50px] font-poppins font-[500] text-[16px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0 ">
-                Home
-              </li>
-            </Link>
-            <Link href="/Shop">
-              <li className="w-[42px] h-[24px] mt-[29px] ml-[62px]    relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">Shop</li>
-            </Link>
-            <Link href="/Blog">
-              <li className="w-[36px] h-[24px] mt-[29px] ml-[74px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0"> Blog</li>
-            </Link>
-            <Link href="/Contact">
-              <li className="w-[66px] h-[24px] mt-[29px] ml-[86px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">Contact</li>
-            </Link>
-          </ul>
+
+        {/* Desktop Navigation */}
+        <ul className="hidden md:flex gap-16">
+          <Link href="/">
+            <li className="font-poppins font-[500] text-[16px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">
+              Home
+            </li>
+          </Link>
+          <Link href="/Shop">
+            <li className="font-poppins font-[500] text-[16px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">
+              Shop
+            </li>
+          </Link>
+          <Link href="/Blog">
+            <li className="font-poppins font-[500] text-[16px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">
+              Blog
+            </li>
+          </Link>
+          <Link href="/Contact">
+            <li className="font-poppins font-[500] text-[16px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">
+              Contact
+            </li>
+          </Link>
+        </ul>
+
+        {/* Icons */}
+        <div className="hidden md:flex gap-10">
+          <Image src="/user.png" alt="User" height={24} width={24} className="w-[24px] h-[24px] hover:scale-110" />
+          <Image src="/search.png" alt="Search" height={24} width={24} className="w-[24px] h-[24px] hover:scale-110" />
+          <FaRegHeart className="w-[24px] h-[24px] hover:scale-110 hover:text-red-500" />
+          <Link href="/CartSidebar">
+            <AiOutlineShoppingCart className="w-[24px] h-[24px] hover:scale-110" />
+          </Link>
         </div>
-        <div className="w-[200px] h-[24px] mt-[40px] ml-[200px] flex gap-[40px] ">
-          <FaRegUserCircle className="w-[28px] h-[28px]  hover:scale-110 " />
-          <FaSearch className="w-[28px] h-[28px] hover:scale-110 " />
-          <FaRegHeart className="w-[28px] h-[28px] hover:scale-110 hover:text-red-500  " />
-          <AiOutlineShoppingCart className="w-[28px] h-[28px] hover:scale-110 " />
-        </div>
+
+        {/* Mobile Menu Button */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <button className="md:hidden text-3xl text-black ">
+              <FiMenu />
+            </button>
+          </SheetTrigger>
+          <SheetContent side="right" className="bg-[#FFFFFF] w-[300px] p-4">
+            <ul className="flex flex-col items-center gap-6 py-6">
+              <Link href="/">
+                <SheetClose asChild>
+                  <li className="font-poppins hover:text-[#B88E2F] transition-all duration-150 font-[500] text-[16px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">Home</li>
+                </SheetClose>
+              </Link>
+              <Link href="/Shop">
+                <SheetClose asChild>
+                  <li className="font-poppins hover:text-[#B88E2F] transition-all duration-150 font-[500] text-[16px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">Shop</li>
+                </SheetClose>
+              </Link>
+              <Link href="/Blog">
+                <SheetClose asChild>
+                  <li className="font-poppins hover:text-[#B88E2F] transition-all duration-150 font-[500] text-[16px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">Blog</li>
+                </SheetClose>
+              </Link>
+              <Link href="/Contact">
+                <SheetClose asChild>
+                  <li className="font-poppins hover:text-[#B88E2F] transition-all duration-150 font-[500] text-[16px] relative inline-block before:content-[''] before:absolute before:w-0 before:left-0 before:h-[4px] before:top-6 before:rounded-full before:transition-all before:duration-300 before:ease-in-out before:bg-gradient-to-r before:from-yellow-500 before:to-orange-500 hover:before:w-full hover:before:right-0">Contact</li>
+                </SheetClose>
+              </Link>
+              <div className="flex gap-8 mt-4">
+                <Image src="/user.png" alt="User" height={24} width={24} className="w-[24px] h-[24px] hover:scale-110" />
+                <Image src="/search.png" alt="Search" height={24} width={24} className="w-[24px] h-[24px] hover:scale-110" />
+                <FaRegHeart className="w-[24px] h-[24px] hover:scale-110 hover:text-red-500" />
+                <Link href="/CartSidebar">
+                  <AiOutlineShoppingCart className="w-[24px] h-[24px] hover:scale-110" />
+                </Link>
+              </div>
+            </ul>
+          </SheetContent>
+        </Sheet>
       </div>
-      
     </div>
   );
 };

@@ -1,48 +1,54 @@
-import React from 'react'
+import React from 'react';
 
 const FurnitureGallery = () => {
   return (
-    <div className='w-full h-full mt-10  '>
-      {/* Heading sec */}
-    <div className='w-full h-full  justify-center items-center mt-20 '>
-      <p className='font-Poppins font-semibold text-[20px] text-center text-[#616161]'>Share your setup with</p>
-       <h1 className='mt-6  font-Poppins font-[700]  text-[40px] text-[#3A3A3A] items-center text-center'>#FuniroFurniture</h1>
-     
+    <div className="w-full h-auto mt-10 px-4">
+      {/* Heading Section */}
+      <div className="w-full text-center mt-10">
+        <p className="font-poppins font-semibold text-[20px] text-[#616161]">
+          Share your setup with
+        </p>
+        <h1 className="mt-6 font-poppins font-bold text-[32px] md:text-[40px] text-[#3A3A3A]">
+          #FuniroFurniture
+        </h1>
+      </div>
 
-    </div >
-      {/* image sec */}
-      <div className='flex gap-3 w-full ml-[
--196px] '>
-    <div className='mt-5  ml-[-24]  flex'>
-      <img src="/image1.png" alt="" height={200} width={200} />
-      
-    </div>
-    <div className='h-[312px] w-[451px]  mt-24 ml-3 '>
-        <img className='' src="/image2.png" alt="" />
-
-        <img className='mt-8' src="/image4.png" alt="" height={"242px"} width={"420px"}/>
-    </div>
-    <div className='h-[195px] flex flex-col items-center w-[392px] mt-28 ml-3 '>
-    <img className='h-[242px] w-[344px]' src="/image9.png" alt="" />
-        <img className='h-[342px] w-[344px] pb-24 pt-5' src="/image3.png" alt="" />
-       
-    </div>
-    <div className='h-[290px] w-[348px] mt-24  '>
-        <img src="/image6.png" alt="" />
-        <img className='mt-5 h-72 w-72' src="/image7.png" alt="" width={"220px"} height={"242"} />
+      {/* Image Section */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-10">
+        {/* Column 1 */}
+        <div className="flex  flex-col gap-4">
+          <img src="/image1.png" alt="Furniture 1" className="w-full h-auto rounded-md" />
         
 
-    </div>
-    
-    <div className='h-[242px] w-[344px] mt-24 ml-[-4] '>
-        <img src="/image9.png" alt="" />
-    </div>
-    
-    </div>
+        </div>
 
+        {/* Column 2 */}
+        <div className="flex flex-col gap-4">
+          <img src="/image2.png" alt="Furniture 2" className="w-full h-auto rounded-md" />
+          <img src="/image4.png" alt="Furniture 4" className="w-full h-auto rounded-md" />
+        </div>
+
+        {/* Column 3 */}
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4">
+            <img src="/image9.png" alt="Furniture 9" className="w-full h-auto rounded-md" />
+            
+          </div>
+        </div>
+
+        {/* Column 4 */}
+        <div className="flex flex-col gap-4">
+          <img src="/image6.png" alt="Furniture 6" className="w-full h-auto rounded-md" />
+          <img src="/image7.png" alt="Furniture 7" className="w-full h-[250px] rounded-md" />
+        </div>
+
+        {/* Column 5 */}
+        <div className="flex flex-col gap-4 ">
+          <img src="/image9.png" alt="Furniture 9" className="w-full h-auto rounded-md" />
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default FurnitureGallery
-
+export default FurnitureGallery;

@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import Link from "next/link";
 import Header from "@/components/Header";
 import { FaAngleRight } from "react-icons/fa";
 import React from "react";
@@ -10,7 +11,7 @@ const page = () => {
       <Header />
       {/* Background Section */}
       <div
-        className="h-[316px] w-full mt-24 opacity-[70%] relative"
+        className="h-[316px] w-full mt-64 md:mt-10 opacity-70 relative"
         style={{
           backgroundImage: "url('/bg-img.jpeg')",
           backgroundSize: "cover",
@@ -18,28 +19,32 @@ const page = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Content Wrapper */}
-        <div className="flex flex-col items-center justify-center h-full">
-          <img className="h-[77px] w-[77px] " src="/logo.png" alt="" />
-          <h1 className="font-Poppins font-[500]  text-[48px] text-[#000000]">
+        <div className="flex flex-col items-center justify-center h-full text-center px-4">
+          {/* Logo */}
+          <img
+            className="h-16 w-16 md:h-[77px] md:w-[77px]"
+            src="/logo.png"
+            alt="Logo"
+          />
+          {/* Title */}
+          <h1 className="font-Poppins font-medium text-3xl md:text-4xl lg:text-5xl text-black mt-2">
             Blog
           </h1>
-
-          {/* Breadcrumb Navigation */}
-          <div className="flex items-center mt-4">
-            <p className="text-[#000000] font-poppins text-[16px] font-[500]">
-              Home
-            </p>
-            <FaAngleRight className="mx-2" />
-            <p className="text-[#000000] font-poppins text-[16px] font-[300]">
-              Blog
-            </p>
+          {/* Breadcrumbs */}
+          <div className="flex items-center justify-center mt-4 text-sm md:text-base">
+            <Link href="/">
+              <p className="text-black font-Poppins hover:font-bold  font-medium">
+                Home
+              </p>
+            </Link>
+            <FaAngleRight className="mx-2 text-black" />
+            <p className="text-black font-Poppins font-light">Blog</p>
           </div>
         </div>
       </div>
       {/* ------------------------------- */}
 
-      <main className="w-[1440px] h-[3310px]   mb-36 shadow-md mx-10 mt-44 relative">
+      <main className="w-[1440px] h-[3310px]     mb-36 shadow-md mx-auto mt-44 relative">
         <div className="w-[820px]  h-[3130px] mt-16 ml-24 border-2 rounded-md relative">
           {/* Short Form Box */}
           <div className="absolute mt-2 rounded-md shadow-lg  top-0 right-[-440px] border-[#9F9F9F]  w-[360px] h-[450px]  border-[1px]">
@@ -54,9 +59,9 @@ const page = () => {
                 Categories
               </h2>
               <p className="w-[49px] flex h-[24px] mt-4 ml-6 font-Poppins font-normal text-[16px] text-[#9F9F9F]">
-                Crafts 
+                Crafts
               </p>
-             
+
               <p className="w-[55px] h-[24px] mt-6 ml-6 font-Poppins font-normal text-[16px] text-[#9F9F9F]">
                 Design
               </p>
@@ -321,49 +326,47 @@ const page = () => {
                 Read more
               </h2>
             </div>
-            
           </div>
-       
         </div>
-        {/*  */}
+        {/* saaad */}
         <div className="h-24 w-76 mt-4 flex gap-14 pt-7 justify-center  text-center">
-            <div className="h-14 w-14 items-center  pt-3 rounded-md bg-[#B88E2F] font-Poppins font-normal text-[20px] text-[#FFFFFF]">
-              <p className="font-Poppins font-normal items-center ">1</p>
-            </div>
-            <div className="h-14 w-14 items-center pt-3 bg-[#F9F1E7] border-2 border-gray-400 rounded-md font-Poppins font-normal text-[20px] text-[#000000]">
-              <p className="font-Poppins font-normal items-center ">2</p>
-            </div>
-            <div className="h-14 w-16 items-center border-2 border-gray-400  pt-3 bg-[#F9F1E7] border-[] rounded-md font-Poppins font-normal text-[20px] text-[#000000]">
-              <p className="font-Poppins font-normal items-center ">3</p>
-            </div>
-            <div className="mt-4">
-              <p className="text-[24px]">Next</p>
-            </div>
+          <div className="h-14 w-14 items-center  pt-3 rounded-md bg-[#B88E2F] font-Poppins font-normal text-[20px] text-[#FFFFFF]">
+            <p className="font-Poppins font-normal items-center ">1</p>
           </div>
-       
-      
+          <div className="h-14 w-14 items-center pt-3 bg-[#F9F1E7] border-2 border-gray-400 rounded-md font-Poppins font-normal text-[20px] text-[#000000]">
+            <p className="font-Poppins font-normal items-center ">2</p>
+          </div>
+          <div className="h-14 w-16 items-center border-2 border-gray-400  pt-3 bg-[#F9F1E7] border-[] rounded-md font-Poppins font-normal text-[20px] text-[#000000]">
+            <p className="font-Poppins font-normal items-center ">3</p>
+          </div>
+          <div className="mt-4">
+            <p className="text-[24px]">Next</p>
+          </div>
+        </div>
       </main>
-      <div className="w-[1500px]  border-2 border-[#d6d3d3] hover:border-[#B88E2F]   flex justify-around h-[270px]  mt-28 mx-auto">
-        <div className="w-1/5 flex hover:scale-105 gap-4 items-center">
-          <div className="w-14 h-14 ">
+      {/* Feature 1 */}
+      <div className="w-full space-y-6 md:space-y-0 items-center  max-w-[1500px] border-2 border-[#d6d3d3] hover:border-[#B88E2F] flex flex-wrap justify-around  h-auto mt-28 mx-auto p-8 gap-6">
+        {/* Feature 1 */}
+        <div className="w-full sm:w-[45%] md:w-[30%] lg:w-1/5 flex hover:scale-105 gap-4 items-center">
+          <div className="w-14 h-14">
             <img
               src="/Group.png"
               alt="High Quality"
               className="w-full h-full object-contain"
             />
           </div>
-          <div className="w-full">
-            <h3 className="font-Poppins font-semibold text-xl text-[#242424]">
+          <div>
+            <h3 className="font-Poppins font-semibold text-lg md:text-xl text-[#242424]">
               High Quality
             </h3>
-            <p className="font-Poppins text-base text-[#898989]">
+            <p className="font-Poppins text-sm md:text-base text-[#898989]">
               Crafted from top materials
             </p>
           </div>
         </div>
 
         {/* Feature 2 */}
-        <div className="w-1/5 flex gap-4 items-center">
+        <div className="w-full sm:w-[45%] md:w-[30%] lg:w-1/5 flex hover:scale-105 gap-4 items-center">
           <div className="w-14 h-14">
             <img
               src="/guarantee.png"
@@ -371,18 +374,18 @@ const page = () => {
               className="w-full h-full object-contain"
             />
           </div>
-          <div className="w-full">
-            <h3 className="font-Poppins font-semibold text-xl text-[#242424]">
+          <div>
+            <h3 className="font-Poppins font-semibold text-lg md:text-xl text-[#242424]">
               Warranty Protection
             </h3>
-            <p className="font-Poppins text-base text-[#898989]">
+            <p className="font-Poppins text-sm md:text-base text-[#898989]">
               Over 2 years
             </p>
           </div>
         </div>
 
         {/* Feature 3 */}
-        <div className="w-1/5 flex gap-4 items-center">
+        <div className="w-full sm:w-[45%] md:w-[30%] lg:w-1/5 flex hover:scale-105 gap-4 items-center">
           <div className="w-14 h-14">
             <img
               src="/shipping.png"
@@ -390,18 +393,18 @@ const page = () => {
               className="w-full h-full object-contain"
             />
           </div>
-          <div className="w-full">
-            <h3 className="font-Poppins font-semibold text-xl text-[#242424]">
+          <div>
+            <h3 className="font-Poppins font-semibold text-lg md:text-xl text-[#242424]">
               Free Shipping
             </h3>
-            <p className="font-Poppins text-base text-[#898989]">
+            <p className="font-Poppins text-sm md:text-base text-[#898989]">
               Delivered to your door
             </p>
           </div>
         </div>
 
         {/* Feature 4 */}
-        <div className="w-1/5 flex gap-4 items-center">
+        <div className="w-full sm:w-[45%] md:w-[30%] lg:w-1/5 flex hover:scale-105 gap-4 items-center">
           <div className="w-14 h-14">
             <img
               src="/customer-support.png"
@@ -409,11 +412,11 @@ const page = () => {
               className="w-full h-full object-contain"
             />
           </div>
-          <div className="w-full">
-            <h3 className="font-Poppins font-semibold text-xl text-[#242424]">
+          <div>
+            <h3 className="font-Poppins font-semibold text-lg md:text-xl text-[#242424]">
               24/7 Support
             </h3>
-            <p className="font-Poppins text-base text-[#898989]">
+            <p className="font-Poppins text-sm md:text-base text-[#898989]">
               We’re always here to help
             </p>
           </div>
@@ -421,7 +424,6 @@ const page = () => {
       </div>
       <Footer />
     </div>
-    
   );
 };
 

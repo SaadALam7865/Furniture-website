@@ -6,9 +6,13 @@ export default function Footer() {
           
           <div>
             <h3 className="font-semibold text-lg text-black">Funiro.</h3>
-            <p className="text-gray-400">
-              400 University Drive Suite 200 Coral Gables,
-              <br /> FL 33134 USA.
+            <p className="text-slate-800 font-normal">
+              Ornagi Town Karachi,
+              <br />
+              Contact Me: [0312-0004527]
+              <br />
+              Email: saadalam929@gmail.com
+              <br /> 
             </p>
           </div>
   

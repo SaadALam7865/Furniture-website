@@ -1,187 +1,196 @@
-import Header from "@/components/Header";
-import React from "react";
+
+
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Footer from "@/components/Footer";
+import Feature from "@/components/Feature";
 import { FaAngleRight } from "react-icons/fa";
+import Swal from "sweetalert2";
+import { Product } from "../../../types/products";
+import { getCartItems, removeFromCart, updateCartQuantity } from "../action/action";
+import { useRouter } from "next/navigation"
 
-const page = () => {
+const CartPage = () => {
+  const [cartItem, setCartItem] = useState<Product[]>([]);
+
+  useEffect(() => {
+    setCartItem(getCartItems());
+  }, []);
+
+  const handleRemove = (id: string) => {
+    Swal.fire({
+      title: "Are You Sure?",
+      text: "You will not be able to recover this item!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeFromCart(id);
+        setCartItem(getCartItems());
+        Swal.fire("Removed!", "Item has been removed.", "success");
+      }
+    });
+  };
+
+  const handleQuantityChange = (id: string, quantity: number) => {
+    updateCartQuantity(id, quantity);
+    setCartItem(getCartItems());
+  };
+
+  const handleIncrement = (id: string) => {
+    const product = cartItem.find((item) => item._id === id);
+    if (product) {
+      handleQuantityChange(id, product.stock + 1);
+    }
+  };
+
+  const handleDecrement = (id: string) => {
+    const product = cartItem.find((item) => item._id === id);
+    if (product && product.stock > 1) {
+      handleQuantityChange(id, product.stock - 1);
+    }
+  };
+
+  const calculatedTotal = () => {
+    return cartItem.reduce((total, item) => total + item.price * item.stock, 0);
+  };
+
+   const router = useRouter()
+  const handleProceed = () => {
+    Swal.fire({
+      title: "Proceed to Checkout",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Proceed!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Success!", "Your order has been successfully processed.", "success");
+        router.push('/Checkout')
+        setCartItem([]);
+      }
+    });
+  };
+
   return (
-    <div>
-      <Header />
-
-{/* Background Section */}
-<div
-  className="h-[316px] w-full font-bold mt-24 opacity-[70%] relative"
-  style={{
-    backgroundImage: "url('/bg-img.jpeg')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  }}
->
-  {/* Content Wrapper */}
-  <div className="flex flex-col items-center justify-center h-full">
-    <img className="h-[77px] w-[77px]" src="/logo.png" alt="" />
-    <h1 className="font-Poppins font-[500] text-[48px] text-[#000000]">
-      Cart
-    </h1>
-
-    {/* Breadcrumb Navigation */}
-    <div className="flex items-center mt-4">
-      <Link href="/">
-        <p className="text-[#000000] font-poppins text-[16px] font-semibold">
-          Home
-        </p>
-      </Link>
-      <FaAngleRight className="mx-2" />
-      <p className="text-[#000000] font-poppins text-[16px] font-[300]">
-        Cart
-      </p>
-    </div>
-  </div>
-      </div>
-      {/* cart sections */}
-      <div className="w-full flex flex-col lg:flex-row items-center h-auto mt-16">
-  <div className="w-full lg:max-w-[1452px] h-auto flex flex-col lg:flex-row items-center mt-8 lg:ml-28">
-    <div className="w-full lg:max-w-[817px] h-auto p-4 mt-10 border border-gray-400">
+    <div className="bg-gray-50 min-h-screen">
       {/* Header Section */}
-      <div className="flex justify-around h-[55px] mt-8">
-        <h2 className="text-base font-Poppins font-medium text-black">Product</h2>
-        <h2 className="text-base font-Poppins font-medium text-black">Price</h2>
-        <h2 className="text-base font-Poppins font-medium text-black">Quantity</h2>
-        <h2 className="text-base font-Poppins font-medium text-black">Subtotal</h2>
-      </div>
-      {/* Product Section */}
-      <div className="flex items-center mt-8">
-        {/* Image Section */}
-        <div className="w-[90px] h-[90px]">
-          <div className="w-full h-full bg-[#fbe6b5] border-2 border-gray-300 rounded-sm">
-            <Image src="/sofa.png" alt="sofa" height={90} width={111} />
+      <div
+        className="h-[316px] flex opacity-[90%] items-center justify-center text-center text-white"
+        style={{
+          backgroundImage: "url('/bg-img.jpeg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="backdrop-blur-sm bg-black/50 p-7 rounded-xl">
+          <Image src="/logo.png" alt="Logo" height={77} width={77} />
+          <h1 className="text-4xl font-bold mt-4">Cart</h1>
+          <div className="flex items-center justify-center mt-2">
+            <Link href="/">
+              <p className="text-white text-sm font-medium hover:underline">Home</p>
+            </Link>
+            <FaAngleRight className="mx-2" />
+            <p className="text-gray-300 text-sm">Cart</p>
           </div>
         </div>
-        {/* Text Section */}
-        <div className="flex-grow flex items-center ml-4">
-          <h3 className="flex-1 font-Poppins text-gray-500 text-base">Asgaard sofa</h3>
-          <h3 className="flex-1 font-Poppins text-gray-500 text-base text-center">Rs. 250,000.00</h3>
-          <div className="w-8 h-8 font-Poppins flex  justify-center items-center border border-gray-400 rounded-sm hover:bg-[#B88E2F] hover:text-black">
-            <p className="text-base">1</p>
-          </div>
-          <h3 className="flex-1 text-black text-base text-right">Rs. 250,000.00</h3>
-        </div>
-        {/* Icon Section */}
-        <div className="ml-2">
-          <img className="w-[21px] h-[21px]" src="/Vector (4).png" alt="vector" />
-        </div>
       </div>
-    </div>
 
-    {/* Cart Totals Section */}
-    <div className="w-full lg:max-w-[393px] h-auto mt-10 lg:mt-0 lg:ml-20 p-4">
-      <h1 className="text-center font-Poppins text-2xl font-semibold">Cart Totals</h1>
-      <div className="flex justify-between mt-8">
-        <h3 className="text-base font-medium">Subtotal</h3>
-        <h3 className="text-base font-Poppins font-medium text-gray-500">Rs. 250,000.00</h3>
-      </div>
-      <div className="flex justify-between mt-8">
-        <h3 className="text-base font-medium">Total</h3>
-        <h3 className="text-lg font-Poppins  font-medium text-[#B88E2F]">Rs. 250,000.00</h3>
-      </div>
-      {/* Button Section */}
-      <div className="mt-10">
-        <Link href="/Checkout">
-          <button className="w-full hover:border-[#898989] transition h-[60px] rounded-xl border border-black text-black text-lg font-medium hover:bg-[#B88E2F] hover:text-white">
-            Check Out
-          </button>
-        </Link>
-      </div>
-    </div>
-  </div>
-</div>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* Cart Items Section */}
+          <div className="col-span-2 bg-white shadow-md rounded-lg p-6">
+            <h2 className="text-lg font-bold mb-6">Shopping Cart</h2>
 
-       {/* Feature 1 */}
-       <div className="w-full space-y-6 md:space-y-0 items-center  max-w-[1500px] border-2 border-[#d6d3d3] hover:border-[#B88E2F] flex flex-wrap justify-around  h-auto mt-40 mx-auto p-8 gap-6">
-        {/* Feature 1 */}
-        <div className="w-full sm:w-[45%] md:w-[30%] lg:w-1/5 flex hover:scale-105 gap-4 items-center">
-          <div className="w-14 h-14">
-            <img
-              src="/Group.png"
-              alt="High Quality"
-              className="w-full h-full object-contain"
-            />
+            {cartItem.length > 0 ? (
+              cartItem.map((item) => (
+                <div
+                  key={item._id}
+                  className="flex items-center justify-between border-b pb-4 mb-4"
+                >
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src={item.imageUrl || "/placeholder.png"}
+                      alt={item.title}
+                      width={80}
+                      height={80}
+                      className="rounded-lg border hover:border-[1px] hover:border-[#FFAD33]"
+                    />
+                    <div>
+                      <p className="font-medium text-gray-700">{item.title}</p>
+                      <p className="text-sm text-gray-500">Rs. {item.price}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() => handleDecrement(item._id)}
+                      className="px-2 py-1 bg-gray-200 rounded-lg hover:bg-gray-300"
+                    >
+                      -
+                    </button>
+                    <p>{item.stock}</p>
+                    <button
+                      onClick={() => handleIncrement(item._id)}
+                      className="px-2 py-1 bg-gray-200 rounded-lg hover:bg-gray-300"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-700">
+                      Rs. {item.price * item.stock}
+                    </p>
+                    <button
+                      onClick={() => handleRemove(item._id)}
+                      className="bg-red-500 text-white hover:bg-red-600 px-2 py-1 rounded-sm hover:transition-all duration-200  text-sm  mt-1"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 text-center text-lg">Your cart is empty.</p>
+            )}
           </div>
-          <div>
-            <h3 className="font-Poppins font-semibold text-lg md:text-xl text-[#242424]">
-              High Quality
-            </h3>
-            <p className="font-Poppins text-sm md:text-base text-[#898989]">
-              Crafted from top materials
-            </p>
-          </div>
-        </div>
 
-        {/* Feature 2 */}
-        <div className="w-full sm:w-[45%] md:w-[30%] lg:w-1/5 flex hover:scale-105 gap-4 items-center">
-          <div className="w-14 h-14">
-            <img
-              src="/guarantee.png"
-              alt="Warranty Protection"
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <div>
-            <h3 className="font-Poppins font-semibold text-lg md:text-xl text-[#242424]">
-              Warranty Protection
-            </h3>
-            <p className="font-Poppins text-sm md:text-base text-[#898989]">
-              Over 2 years
-            </p>
-          </div>
-        </div>
-
-        {/* Feature 3 */}
-        <div className="w-full sm:w-[45%] md:w-[30%] lg:w-1/5 flex hover:scale-105 gap-4 items-center">
-          <div className="w-14 h-14">
-            <img
-              src="/shipping.png"
-              alt="Free Shipping"
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <div>
-            <h3 className="font-Poppins font-semibold text-lg md:text-xl text-[#242424]">
-              Free Shipping
-            </h3>
-            <p className="font-Poppins text-sm md:text-base text-[#898989]">
-              Delivered to your door
-            </p>
-          </div>
-        </div>
-
-        {/* Feature 4 */}
-        <div className="w-full sm:w-[45%] md:w-[30%] lg:w-1/5 flex hover:scale-105 gap-4 items-center">
-          <div className="w-14 h-14">
-            <img
-              src="/customer-support.png"
-              alt="24/7 Support"
-              className="w-full h-full object-contain"
-            />
-          </div>
-          <div>
-            <h3 className="font-Poppins font-semibold text-lg md:text-xl text-[#242424]">
-              24/7 Support
-            </h3>
-            <p className="font-Poppins text-sm md:text-base text-[#898989]">
-              We’re always here to help
-            </p>
+          {/* Cart Totals Section */}
+          <div className="bg-white shadow-md rounded-lg p-6">
+            <h2 className="text-lg font-bold mb-6">Cart Totals</h2>
+            <div className="flex justify-between items-center mb-4">
+              <p className="text-gray-600">Subtotal</p>
+              <p className="font-medium">Rs. {calculatedTotal()}</p>
+            </div>
+            <div className="flex justify-between items-center mb-8">
+              <p className="text-gray-600">Total</p>
+              <p className="text-lg font-bold text-green-600">Rs. {calculatedTotal()}</p>
+            </div>
+             <Link href="/Checkout">
+            <button
+              onClick={handleProceed}
+              className="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600"
+            >
+              Proceed to Checkout
+            </button>
+            </Link>
           </div>
         </div>
       </div>
-      <Footer/>
+      <div className="mt-5">
+      <Feature/>
+      </div>
+     
     </div>
     
     
   );
 };
 
-export default page;
+export default CartPage;

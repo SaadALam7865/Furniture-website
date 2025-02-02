@@ -53,7 +53,7 @@ export default function Inspiration() {
             Our designer already made a lot of beautiful prototypes of rooms
             that inspire you.
           </p>
-          <button className="bg-[#c1975a] text-white px-4 py-3 text-lg font-medium rounded-md hover:bg-[#a37e49] transition">
+          <button className="bg-[#B88E2F] text-white px-4 py-3 text-lg font-medium rounded-md hover:bg-[#d7a632] transition">
             Explore More
           </button>
         </div>

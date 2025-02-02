@@ -9,7 +9,6 @@ import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 
 import { IoIosArrowForward } from "react-icons/io";
-import Products from "@/components/Products";
 
 const RelatedData = [
   {
@@ -123,18 +122,34 @@ const productsData = [
     originalPrice: "Rp 4.200.000",
     discount: "New",
   },
-  // Product data array...
+  {
+    id: 9,
+    imgSrc: "/pic8.jpeg",
+    name: "Tranquilo",
+    description: "Minimalist armchair",
+    price: "Rp 3.000.000",
+    originalPrice: "Rp 4.200.000",
+    discount: "New",
+  }
+ 
+ 
+
+ 
 
 ];
 
 const ProductPage = ({ params }: { params: { id: string } }) => {
+
+
   const hoverIcons = [
     { alt: "Compare", src: "/compare.png" },
     { alt: "Share", src: "/share.png" },
     { alt: "Heart", src: "/myheart.png" },
   ];
+
+  
   const { id } = params;
-  const product = productsData.find((item) => item.id === parseInt(id, 10));
+  const product = productsData.find((item) => item.id === parseInt(id,10));
 
   if (!product) {
     return (
@@ -166,7 +181,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
             href="/Shop"
             className="text-[#9F9F9F] hover:cursor-pointer hover:scale-110 transition-transform"
           >
-            Shop
+          CartSidebar
           </Link>
           <IoIosArrowForward className="w-4 h-4" />
           <span className="text-black pl-2">{product.name}</span>
@@ -187,6 +202,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
               />
             ))}
           </div>
+
 
           {/* Main Image */}
           <div className="flex-1 flex justify-center items-center">
@@ -454,7 +470,8 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
   <div className="w-[245px] h-[48px]  hover:text-white border-[#B88E2F] hover:bg-[#B88E2F] text-center items-center border-[2px]">
     <Link href="/Shop"><button className="font-poppins hover:text-white text-[#B88E2F] font-semibold text-[16px] mt-[10px]">
       Show More
-    </button></Link>
+    </button>
+    </Link>
   </div>
 </div>
 

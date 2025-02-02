@@ -1,22 +1,25 @@
-import Header from '@/components/Header'
-import Hero from '@/components/Hero'
-import Hero2 from '@/components/Hero2'
-import Products from '@/components/Products'
+
+
+"use client";
+import Hero from '@/components/Hero';
+import Hero2 from '@/components/Hero2';
 import Hero3 from '@/components/Hero3'
 import React from 'react'
 import FurnitureGallery from '@/components/FurnitureGallery'
-import Footer from '@/components/Footer'
+import ProductsCard from '@/components/ProductsCard';
+
+
+
 
 const page = () => {
+  
   return (
     <div>
-      <Header/>
       <Hero/>
       <Hero2/>
-      <Products/>
+      <ProductsCard/>
       <Hero3/>
       <FurnitureGallery/>
-      <Footer/>
     </div>
   )
 }

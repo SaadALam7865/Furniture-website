@@ -1,8 +1,12 @@
+
+
+
 import type { Metadata } from "next";
-import Header from "@/components/Header"; // Import the Header component
-import Footer from "@/components/Footer"; // Import the Footer component
-import { Inter, Poppins, Montserrat } from "next/font/google"; // Import Montserrat correctly
+import { Inter, Poppins, Montserrat } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { FavouriteProvider } from "@/app/wishlist/FavouriteContext"; // Import the FavouriteProvider
 
 // Configure fonts with desired weights and subsets
 const inter = Inter({ subsets: ["latin"], weight: ["400", "700"] });
@@ -23,11 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        
-        {/* Main content */}
-        <main>{children}</main>
-
-       
+        {/* Wrap the entire layout with the FavouriteProvider */}
+        <FavouriteProvider>
+          <Header />
+          {children}
+          <Footer />
+        </FavouriteProvider>
       </body>
     </html>
   );

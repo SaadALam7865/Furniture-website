@@ -11,13 +11,13 @@ const Hero = () => {
       />
 
       {/* Hero Text Section */}
-      <div className="w-full  md:w-[40%] h-auto md:h-full flex flex-col justify-center px-4 md:pr-10 md:mt-8 text-center md:text-left">
+      <div className="w-full  md:w-[40%]   h-auto md:h-full flex flex-col justify-center px-4 md:pr-10 md:mt-8 text-center md:text-left">
         <h3 className="font-poppins font-semibold text-[14px] md:text-[16px] tracking-wide">
           New Arrival
         </h3>
 
         {/* "Discover Our" and "New Collection" stacked */}
-        <h1 className="font-poppins font-bold text-[32px] md:text-[40px] lg:text-[52px] text-[#B88E2F] mt-4 md:mt-5">
+        <h1 className="font-poppins font-bold  text-[32px] md:text-[40px] lg:text-[52px] text-[#B88E2F] mt-4 md:mt-5">
           <span className="block">Discover Our</span>
           <span className="block">New Collection</span>
         </h1>
@@ -29,7 +29,7 @@ const Hero = () => {
 
         {/* Button Section */}
         <div className="mt-6 md:mt-8">
-          <button className="bg-[#B88E2F] hover:bg-yellow-700 py-3 md:py-4 px-8 md:px-16 font-poppins font-[700] text-[14px] md:text-[16px] text-white rounded-md shadow-md transition-transform duration-300 hover:scale-105">
+          <button className="bg-[#B88E2F] hover:bg-yellow-700 py-3 md:py-5 px-8 md:px-16 font-poppins font-[700] text-[14px] md:text-[16px] text-white rounded-md shadow-md transition-transform duration-300 hover:scale-105">
             BUY NOW
           </button>
         </div>

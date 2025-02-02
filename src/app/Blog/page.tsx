@@ -1,6 +1,5 @@
-import Footer from "@/components/Footer";
 import Link from "next/link";
-import Header from "@/components/Header";
+
 import { FaAngleRight } from "react-icons/fa";
 import React from "react";
 import { FaSearch } from "react-icons/fa";
@@ -8,7 +7,7 @@ import { FaSearch } from "react-icons/fa";
 const page = () => {
   return (
     <div>
-      <Header />
+     
       {/* Background Section */}
       <div
         className="h-[316px] w-full mt-64 md:mt-10 opacity-70 relative"
@@ -422,7 +421,7 @@ const page = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      
     </div>
   );
 };

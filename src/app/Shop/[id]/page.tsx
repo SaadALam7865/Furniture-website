@@ -1,155 +1,57 @@
 import React from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import Image from "next/image";
 import { FaTwitter, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
-
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { productDetailQuery, relatedProducts } from "@/sanity/lib/queries";
 import { IoIosArrowForward } from "react-icons/io";
-import Products from "@/components/Products";
+import Feature from "@/components/Feature";
 
-const RelatedData = [
-  {
-    id: 1,
-    imgSrc: "/pic1.png",
-    name: "Syltherine",
-    description: "Stylish cafe chair",
-    price: "Rp 2.500.000",
-    originalPrice: "Rp 3.500.000",
-    discount: "-30%",
-  },
-  {
-    id: 2,
-    imgSrc: "/pic4.jpeg",
-    name: "Syltherine",
-    description: "Stylish cafe chair",
-    price: "Rp 2.500.000",
-    originalPrice: "Rp 3.500.000",
-    discount: "-50%",
-  },
-  {
-    id: 3,
-    imgSrc: "/pic3.png",
-    name: "Lolito",
-    description: "Luxury big sofa",
-    price: "Rp 7.000.000",
-    originalPrice: "Rp 10.000.000",
-    discount: "-50%",
-  },
-  {
-    id: 4,
-    imgSrc: "/pic4.jpeg",
-    name: "Respira",
-    description: "Outdoor bar table and stool",
-    price: "Rp 4.500.000",
-    originalPrice: "Rp 5.500.000",
-    discount: "New",
-  },
+
+type TProducts = {
+  _id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  price: number;
+  isNew: boolean;
+  dicountPercentage: number;
+};
+const hoverIcons = [
+  { alt: "Compare", src: "/compare.png" },
+  { alt: "Share", src: "/share.png" },
+  { alt: "Heart", src: "/myheart.png" },
 ];
 
-const productsData = [
-  {
-    id: 1,
-    imgSrc: "/pic1.png",
-    name: "Syltherine",
-    description: "Stylish cafe chair",
-    price: "Rp 2.500.000",
-    originalPrice: "Rp 3.500.000",
-    discount: "-30%",
-  },
-  {
-    id: 2,
-    imgSrc: "/pic4.jpeg",
-    name: "Syltherine",
-    description: "Stylish cafe chair",
-    price: "Rp 2.500.000",
-    originalPrice: "Rp 3.500.000",
-    discount: "-50%",
-  },
-  {
-    id: 3,
-    imgSrc: "/pic3.png",
-    name: "Lolito",
-    description: "Luxury big sofa",
-    price: "Rp 7.000.000",
-    originalPrice: "Rp 10.000.000",
-    discount: "-50%",
-  },
-  {
-    id: 4,
-    imgSrc: "/pic4.jpeg",
-    name: "Respira",
-    description: "Outdoor bar table and stool",
-    price: "Rp 4.500.000",
-    originalPrice: "Rp 5.500.000",
-    discount: "New",
-  },
-  {
-    id: 5,
-    imgSrc: "/pic5.png",
-    name: "Gramina",
-    description: "Wooden dining table",
-    price: "Rp 6.500.000",
-    originalPrice: "Rp 8.000.000",
-    discount: "New",
-  },
-  {
-    id: 6,
-    imgSrc: "/pic6.jpeg",
-    name: "Candella",
-    description: "Elegant bed lamp",
-    price: "Rp 1.200.000",
-    originalPrice: "Rp 1.800.000",
-    discount: "New",
-  },
-  {
-    id: 7,
-    imgSrc: "/pic7.png",
-    name: "Aurora",
-    description: "Luxury sofa set",
-    price: "Rp 9.000.000",
-    originalPrice: "Rp 12.000.000",
-    discount: "-30%",
-  },
-  {
-    id: 8,
-    imgSrc: "/pic8.jpeg",
-    name: "Tranquilo",
-    description: "Minimalist armchair",
-    price: "Rp 3.000.000",
-    originalPrice: "Rp 4.200.000",
-    discount: "New",
-  },
-  // Product data array...
-  // For brevity, I'm omitting the array data here. It remains unchanged.
-];
+const ProductPage = async ({ params }: { params: { id: string } }) => {
 
-const ProductPage = ({ params }: { params: { id: string } }) => {
-  const hoverIcons = [
-    { alt: "Compare", src: "/compare.png" },
-    { alt: "Share", src: "/share.png" },
-    { alt: "Heart", src: "/myheart.png" },
-  ];
-  const { id } = params;
-  const product = productsData.find((item) => item.id === parseInt(id, 10));
+
+  // Fetch data from Sanity
+  const product: TProducts = await sanityFetch({
+   
+    query: productDetailQuery,
+    params: { id: params.id },
+    
+  });
+  
+  // Fetching products data from Sanity
+  const products: TProducts[] = await sanityFetch({ query: relatedProducts });
 
   if (!product) {
-    return (
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <div className="flex-1 flex items-center justify-center">
-          <h1>Product not found</h1>
-        </div>
-        <Footer />
-      </div>
-    );
+
+    return <div className="flex justify-center items-center h-[50vh] text-2xl lg:text-3xl  hover:text-[#FFAD33] font-semibold" >
+      <h1>
+      Products Not found!!
+      </h1>
+    </div>;
+    
   }
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      
 
       {/* Breadcrumb */}
       <div className="bg-[#F9F1E7] mx-auto px-4 py-8">
@@ -168,7 +70,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
             Shop
           </Link>
           <IoIosArrowForward className="w-4 h-4" />
-          <span className="text-black pl-2">{product.name}</span>
+          <span className="text-black pl-2">{product.title}</span>
         </ul>
       </div>
       <div className="container mx-auto px-4 md:px-20 py-10">
@@ -178,8 +80,8 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
             {[...Array(4)].map((_, i) => (
               <Image
                 key={i}
-                src={product.imgSrc}
-                alt={product.name}
+                src={product.imageUrl}
+                alt={product.title}
                 width={90}
                 height={90}
                 className="rounded bg-[#F9F1E7] object-cover hover:cursor-pointer hover:scale-110 transition"
@@ -190,25 +92,31 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
           {/* Main Image */}
           <div className="flex-1 flex justify-center items-center">
             <Image
-              src={product.imgSrc}
-              alt={product.name}
+              src={product.imageUrl}
+              alt={product.title}
               width={481}
               height={400}
-              className="rounded object-cover hover:scale-110 transition"
+              className="rounded object-cover hover:scale-105 transition-all duration-300"
             />
           </div>
 
           {/* Product Info */}
-          <div className="lg:w-1/2 space-y-6">
+          <div className="lg:w-1/2 space-y-5 space-x-3">
             <h1 className="text-black text-2xl lg:text-4xl font-semibold">
-              {product.name}
+              {product.title}
             </h1>
-            <p className="text-[#9F9F9F] text-lg lg:text-2xl">
-              {product.price}
+            <span className="text-[#9F9F9F] mt-3   text-lg lg:text-2xl">
+              ${product.price}
+            </span>  
+            <span className="text-[#9F9F9F] line-through  text-lg lg:text-2xl">
+             ${product.dicountPercentage}
+            </span>
+            <>
+            <p className="text-sm  lg:text-base hover:text-slate-700 text-black">
+              {product.description} 
+              
             </p>
-            <p className="text-sm lg:text-base text-black">
-              {product.description}
-            </p>
+            </>
 
             {/* Ratings */}
             <div className="flex items-center space-x-2">
@@ -229,12 +137,12 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
 
             {/* Size Options */}
             <div>
-              <span className="block text-sm text-[#9F9F9F] mb-2">Size</span>
+              <span className="block text-sm text-slate-700 mb-2">Size</span>
               <div className="flex gap-3">
                 {["L", "XL", "XS"].map((size) => (
                   <button
                     key={size}
-                    className="px-4 py-1 bg-[#F9F1E7] rounded hover:bg-[#B88E2F] hover:text-white transition"
+                    className="px-4 py-1 bg-[#F9F1E7] rounded hover:bg-[#B88E2F] hover:text-white transition-all"
                   >
                     {size}
                   </button>
@@ -252,18 +160,23 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
               </div>
             </div>
 
-            {/* Buttons */}
-            <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
-              <button className="border border-[#9F9F9F]  px-4 sm:px-8 py-2 rounded hover:bg-[#B88E2F] hover:text-white transition text-sm sm:text-base">
+            {/* Button Section */}
+            <div className="flex flex-wrap gap-4 justify-center sm:justify-start px-4 sm:px-0">
+              {/* Quantity Control Button */}
+              <button className="w-full sm:w-auto border border-[#9F9F9F] px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#B88E2F] hover:text-white hover:scale-105 transition-all duration-300 text-sm sm:text-base">
                 - 1 +
               </button>
+
+              {/* Add to Cart Button */}
               <Link href="/Cart">
-                <button className="w-full sm:w-[215px] h-[48px] sm:h-[64px] hover:border-[#9F9F9F] border border-black hover:text-white hover:bg-[#B88E2F] rounded-lg hover:scale-105 transition text-sm sm:text-base">
+                <button className="w-full sm:w-[215px] h-[48px] sm:h-[64px] text-sm sm:text-base py-2 sm:py-3 px-4 sm:px-6 border border-black rounded-lg hover:bg-[#B88E2F] hover:text-white hover:border-[#9F9F9F] hover:scale-105 transition-all duration-300 transform ease-in-out">
                   Add to Cart
                 </button>
               </Link>
+
+              {/* Compare Button */}
               <Link href="/ProductCompare">
-                <button className="w-full sm:w-[215px] h-[48px] sm:h-[64px] hover:bg-[#B88E2F] hover:text-white hover:border-[#9F9F9F] border border-black rounded-lg hover:scale-105 transition-transform text-sm sm:text-base">
+                <button className="w-full sm:w-[215px] h-[48px] sm:h-[64px] text-sm sm:text-base py-2 sm:py-3 px-4 sm:px-6 border border-black rounded-lg hover:bg-[#B88E2F] hover:text-white hover:border-[#9F9F9F] hover:scale-105 transition-all duration-300 transform ease-in-out">
                   + Compare
                 </button>
               </Link>
@@ -386,21 +299,21 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
       {/* Products Section */}
 
       <div className="flex-1 w-full mt-24 pb-28">
-        <h1 className="text-center h-auto w-auto  font-Poppins font-[500] text-[36px] text-[#000000] ">
+        <h1 className="text-center h-auto w-auto  font-Poppins font-[600] text-[36px] text-[#000000] ">
           Related Products
         </h1>
         <div className="mt-10">
           <div className="w-full flex flex-wrap justify-center gap-12">
-            {RelatedData.map((product) => (
+            {products.map((product) => (
               <div
-                key={product.id}
+                key={product._id}
                 className="w-[285px] bg-[#F4F5F7] flex flex-col items-center border border-gray-200 p-4 rounded-lg relative group"
               >
                 {/* Product Image with Link */}
-                <Link href={`/Shop/${product.id}`} passHref>
+                <Link href={`/Shop/${product._id}`} passHref>
                   <Image
-                    src={product.imgSrc}
-                    alt={product.name}
+                    src={product.imageUrl}
+                    alt={product.title}
                     width={285}
                     height={301}
                     className="w-[285px] h-[301px] object-cover rounded-sm mb-4 cursor-pointer"
@@ -408,7 +321,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                 </Link>
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <Link href={`/Shop/${product.id}`}>
+                  <Link href={`/Shop/${product._id}`}>
                     <button className="p-2 bg-white text-yellow-600 hover:border-2 hover:border-[#B88E2F] px-10 font-semibold hover:opacity-75 active:opacity-50 transition-all cursor-pointer">
                       Add to cart
                     </button>
@@ -431,35 +344,37 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
                   </ul>
                 </div>
                 <h3 className="font-poppins font-semibold text-[24px] text-[#3A3A3A]">
-                  {product.name}
+                  {product.title}
                 </h3>
                 <p className="text-[#555555] text-[16px] mb-2">
-                  {product.description}
+                  {/* description */}
                 </p>
                 <div className="flex items-center gap-3">
                   <h2 className="font-poppins font-semibold text-[20px] text-[#3A3A3A]">
                     {product.price}
                   </h2>
-                  <p className="line-through font-poppins font-normal text-[16px] text-[#555555]">
-                    {product.originalPrice}
+                  <p className="line-through font-poppins font-normal  text-[16px] text-[#555555]">
+                    {product.dicountPercentage}
                   </p>
                 </div>
               </div>
             ))}
           </div>
-          
         </div>
         <div className="flex justify-center mt-20">
-  <div className="w-[245px] h-[48px]  hover:text-white border-[#B88E2F] hover:bg-[#B88E2F] text-center items-center border-[2px]">
-    <Link href="/Shop"><button className="font-poppins hover:text-white text-[#B88E2F] font-semibold text-[16px] mt-[10px]">
-      Show More
-    </button></Link>
-  </div>
-</div>
-
+          <div className="w-[245px] h-[48px]  hover:text-white border-[#B88E2F] hover:bg-[#B88E2F] text-center items-center border-[2px]">
+            <Link href="/Shop">
+              <button className="font-poppins hover:text-white text-[#B88E2F] font-semibold text-[16px] mt-[10px]">
+                Show More
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
-
-      <Footer />
+      <div>
+        <Feature/>
+      </div>
+   
     </div>
   );
 };

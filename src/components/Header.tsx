@@ -1,16 +1,24 @@
+
+
 "use client";
 
 import Image from "next/image";
+import { IoSearch } from "react-icons/io5";
 import React, { useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
+import { AiOutlineSearch } from 'react-icons/ai';
+
 import Link from "next/link";
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
 
-const Header = () => {
+
+
+const Header = () => { 
+
   return (
-    <div className="border-b-0 border-[#edd9a9] bg-[#FFFFFF]">
+    <div className=" bg-[#87CEE] border-b-[1px] border-b-gray-100 shadow-md ">
       {/* Desktop Header */}
       <div className="w-full h-[100px] flex items-center justify-between px-4 md:px-8 lg:px-16">
         {/* Logo */}
@@ -44,13 +52,18 @@ const Header = () => {
             </li>
           </Link>
         </ul>
+       
+
+       
 
         {/* Icons */}
         <div className="hidden md:flex gap-10">
           <Image src="/user.png" alt="User" height={24} width={24} className="w-[24px] h-[24px] hover:scale-110" />
-          <Image src="/search.png" alt="Search" height={24} width={24} className="w-[24px] h-[24px] hover:scale-110" />
-          <FaRegHeart className="w-[24px] h-[24px] hover:scale-110 hover:text-red-500" />
-          <Link href="/CartSidebar">
+          <button >
+            <AiOutlineSearch className="w-[24px] h-[24px] hover:scale-110" />
+          </button>
+          <Link href="/wishlist"><FaRegHeart  className="w-[24px] h-[24px] hover:scale-110 hover:text-red-500" /></Link>
+          <Link href="/Cart">
             <AiOutlineShoppingCart className="w-[24px] h-[24px] hover:scale-110" />
           </Link>
         </div>
@@ -86,9 +99,9 @@ const Header = () => {
               </Link>
               <div className="flex gap-8 mt-4">
                 <Image src="/user.png" alt="User" height={24} width={24} className="w-[24px] h-[24px] hover:scale-110" />
-                <Image src="/search.png" alt="Search" height={24} width={24} className="w-[24px] h-[24px] hover:scale-110" />
+                <Image src="/search.png" alt="Search" height={24} width={24} className="w-[24px]  h-[24px] hover:scale-110" />
                 <FaRegHeart className="w-[24px] h-[24px] hover:scale-110 hover:text-red-500" />
-                <Link href="/CartSidebar">
+                <Link href="/Cart">
                   <AiOutlineShoppingCart className="w-[24px] h-[24px] hover:scale-110" />
                 </Link>
               </div>
@@ -96,8 +109,11 @@ const Header = () => {
           </SheetContent>
         </Sheet>
       </div>
+
+      
+      
     </div>
   );
-};
+}
 
 export default Header;

@@ -16,13 +16,13 @@ const Hero2 = () => {
       </div>
 
       {/* Image Section */}
-      <div className="w-full flex flex-wrap justify-center md:justify-between mt-8 md:mt-[45px] gap-6 lg:gap-8">
+      <div className="w-full flex flex-wrap  justify-center md:justify-between mt-8 md:mt-[45px] gap-6 lg:gap-8">
         {/* Dining Image */}
         <div className="flex flex-col items-center w-full sm:w-[45%] md:w-[30%]">
           <img
             src="/dining.png"
             alt="Dining Area"
-            className="w-full hover:scale-105 h-[240px] sm:h-[300px] md:h-[400px] lg:h-[480px] object-cover"
+            className="w-full hover:scale-105 transition-all duration-200 hover:opacity-[80%] h-[240px] sm:h-[300px] md:h-[400px] lg:h-[480px] object-cover"
           />
           <h2 className="mt-4 font-[600] text-center text-[18px] sm:text-[20px] md:text-[24px] text-[#333333]">
             Dining
@@ -34,7 +34,7 @@ const Hero2 = () => {
           <img
             src="/living.png"
             alt="Living Room"
-            className="w-full h-[240px] hover:scale-105 sm:h-[300px] md:h-[400px] lg:h-[480px] object-cover"
+            className="w-full h-[240px] hover:scale-105 transition-all hover:opacity-[80%] duration-200 sm:h-[300px] md:h-[400px] lg:h-[480px] object-cover"
           />
           <h2 className="mt-4 font-[600] text-center text-[18px] sm:text-[20px] md:text-[24px] text-[#333333]">
             Living
@@ -46,7 +46,7 @@ const Hero2 = () => {
           <img
             src="/bedroom.png"
             alt="Bedroom"
-            className="w-full hover:scale-105 h-[240px] sm:h-[300px] md:h-[400px] lg:h-[480px] object-cover"
+            className="w-full hover:scale-105 transition-all duration-200 hover:opacity-[80%] h-[240px] sm:h-[300px] md:h-[400px] lg:h-[480px] object-cover"
           />
           <h2 className="mt-4 font-[600] text-center text-[18px] sm:text-[20px] md:text-[24px] text-[#333333]">
             Bedroom

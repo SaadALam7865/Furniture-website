@@ -2,13 +2,15 @@ import React from "react";
 import Image from "next/image";
 import { FaTwitter, FaYoutube } from "react-icons/fa";
 import Link from "next/link";
+import Swal from "sweetalert2";
+import { Product } from "../../../../types/products";
+import { addToCart } from "@/app/action/action";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { productDetailQuery, relatedProducts } from "@/sanity/lib/queries";
 import { IoIosArrowForward } from "react-icons/io";
 import Feature from "@/components/Feature";
-
 
 type TProducts = {
   _id: string;
@@ -25,34 +27,60 @@ const hoverIcons = [
   { alt: "Heart", src: "/myheart.png" },
 ];
 
+
+
 const ProductPage = async ({ params }: { params: { id: string } }) => {
-
-
   // Fetch data from Sanity
-  const product: TProducts = await sanityFetch({
-   
+  const product: Product = await sanityFetch({
     query: productDetailQuery,
     params: { id: params.id },
-    
   });
+
+
+
+
+
+
+
+
+
+
   
+
   // Fetching products data from Sanity
   const products: TProducts[] = await sanityFetch({ query: relatedProducts });
+ 
+    const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+       e.preventDefault();
+   
+       Swal.fire({
+         position: "top-left",
+         icon: "success",
+         title: `${product.title} added to cart`,
+         imageUrl: `${product.imageUrl}`,
+         imageHeight: 80,
+         imageWidth: 80,
+         showConfirmButton: false,
+         timer: 3500,
+       });
+   
+       addToCart(product);
+     };
+
+
+
+
 
   if (!product) {
-
-    return <div className="flex justify-center items-center h-[50vh] text-2xl lg:text-3xl  hover:text-[#FFAD33] font-semibold" >
-      <h1>
-      Products Not found!!
-      </h1>
-    </div>;
-    
+    return (
+      <div className="flex justify-center items-center h-[50vh] text-2xl lg:text-3xl  hover:text-[#FFAD33] font-semibold">
+        <h1>Products Not found!!</h1>
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col min-h-screen">
-      
-
       {/* Breadcrumb */}
       <div className="bg-[#F9F1E7] mx-auto px-4 py-8">
         <ul className="flex items-center lg:space-x-8 space-x-2 mt-4 text-[16px] sm:text-[20px]">
@@ -105,22 +133,29 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
             <h1 className="text-black text-2xl lg:text-4xl font-semibold">
               {product.title}
             </h1>
-            <span className="text-[#9F9F9F] mt-3   text-lg lg:text-2xl">
-              ${product.price}
-            </span>  
-            <span className="text-[#9F9F9F] line-through  text-lg lg:text-2xl">
-             ${product.dicountPercentage}
-            </span>
+            <div className="flex items-center space-x-10">
+              <span className="text-[#9F9F9F]    text-lg lg:text-2xl">
+                ${product.price}
+              </span>
+              {product.dicountPercentage > 0  && (
+                <span className="text-green-500 line-through text-lg lg:text-2xl font-[500]">
+                  ${product.dicountPercentage}
+                </span>
+              )}
+            </div>
+              {product.isNew &&  (
+                <span className="text-green-500 mt-2 text-md">New</span>
+              )}
             <>
-            <p className="text-sm  lg:text-base hover:text-slate-700 text-black">
-              {product.description} 
-              
-            </p>
+              {/* Shortened Description */}
+              <p className="text-sm lg:text-base text-[#333] line-clamp-4">
+                {product.description}
+              </p>
             </>
 
             {/* Ratings */}
             <div className="flex items-center space-x-2">
-              {[...Array(4)].map((_, i) => (
+              {[...Array(5)].map((_, i) => (
                 <svg
                   key={i}
                   fill="currentColor"
@@ -161,7 +196,7 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
             </div>
 
             {/* Button Section */}
-            <div className="flex flex-wrap gap-4 justify-center sm:justify-start px-4 sm:px-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center sm:justify-start px-4 sm:px-0">
               {/* Quantity Control Button */}
               <button className="w-full sm:w-auto border border-[#9F9F9F] px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#B88E2F] hover:text-white hover:scale-105 transition-all duration-300 text-sm sm:text-base">
                 - 1 +
@@ -169,37 +204,49 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
 
               {/* Add to Cart Button */}
               <Link href="/Cart">
-                <button className="w-full sm:w-[215px] h-[48px] sm:h-[64px] text-sm sm:text-base py-2 sm:py-3 px-4 sm:px-6 border border-black rounded-lg hover:bg-[#B88E2F] hover:text-white hover:border-[#9F9F9F] hover:scale-105 transition-all duration-300 transform ease-in-out">
+                <button
+                 onClick={(e) => handleAddToCart(e, product)} 
+                 className="w-full sm:w-[215px] shadow-lg h-[48px] sm:h-[64px] text-sm sm:text-base py-2 sm:py-3 px-4 sm:px-6 border rounded-lg bg-[#B88E2F] text-white border-[#9F9F9F] hover:bg-white hover:text-black hover:border-[#9F9F9F] hover:scale-105 transition-all duration-300 ease-out">
                   Add to Cart
                 </button>
               </Link>
 
               {/* Compare Button */}
               <Link href="/ProductCompare">
-                <button className="w-full sm:w-[215px] h-[48px] sm:h-[64px] text-sm sm:text-base py-2 sm:py-3 px-4 sm:px-6 border border-black rounded-lg hover:bg-[#B88E2F] hover:text-white hover:border-[#9F9F9F] hover:scale-105 transition-all duration-300 transform ease-in-out">
+                <button className="w-full sm:w-[215px] h-[48px] sm:h-[64px] text-sm sm:text-base py-2 sm:py-3 px-4 sm:px-6 border rounded-lg bg-[#B88E2F] text-white border-[#9F9F9F] hover:bg-white hover:text-black hover:border-[#9F9F9F] hover:scale-105 transition-all duration-300 ease-out">
                   + Compare
                 </button>
               </Link>
             </div>
 
-            <div className="mt-48 w-full flex gap-20 text-left h-[24px] font-Poppins font-normal text-[16px] text-[#9F9F9F]">
-              <p className="text-[#9F9F9F]">SKU</p>
-              <p className="text-[#9F9F9F]">SS001</p>
-            </div>
-            <div className="w-full flex gap-10 h-[24px] mt-2 font-Poppins font-normal text-[16px] text-[#9F9F9F]">
-              <p className="text-[#9F9F9F]">Category</p>
-              <p className="text-[#9F9F9F]">Sofas</p>
-            </div>
-            <div className="w-full flex gap-20 h-[24px] mt-2 font-Poppins font-normal text-[16px] text-[#9F9F9F]">
-              <p className="text-[#9F9F9F]">Tags</p>
-              <p className="text-[#9F9F9F]">Sofa, Chair, Home, Shop</p>
-            </div>
-            <div className="w-full flex gap-20 h-[24px] mt-2 font-Poppins font-normal text-[16px] text-[#9F9F9F]">
-              <p className="text-[#9F9F9F]">Share</p>
-            </div>
+            <div className="mt-16 border-t-2 sm:space-y-5 border-t-[#dddada]">
+  {/* SKU Section */}
+  <div className="mt-8 w-full flex  sm:flex-row gap-6 sm:gap-20 text-left h-auto font-Poppins font-normal text-[14px] sm:text-[16px] text-[#9F9F9F]">
+    <p className="text-[#9F9F9F]">SKU</p>
+    <p className="text-[#9F9F9F]">SS001</p>
+  </div>
+
+  {/* Category Section */}
+  <div className="w-full flex  sm:flex-row gap-6 sm:gap-20 h-auto mt-6 font-Poppins font-normal text-[14px] sm:text-[16px] text-[#9F9F9F]">
+    <p className="text-[#9F9F9F]">Category</p>
+    <p className="text-[#9F9F9F]">Sofas</p>
+  </div>
+
+  {/* Tags Section */}
+  <div className="w-full flex  sm:flex-row gap-6 sm:gap-20 h-auto mt-6 font-Poppins font-normal text-[14px] sm:text-[16px] text-[#9F9F9F]">
+    <p className="text-[#9F9F9F]">Tags</p>
+    <p className="text-[#9F9F9F]">Sofa, Chair, Home, Shop</p>
+  </div>
+
+  {/* Share Section */}
+  <div className="w-full flex  sm:flex-row underline gap-6 sm:gap-20 h-auto mt-6 font-Poppins font-normal text-[14px] sm:text-[16px] text-[#9F9F9F]">
+    <p className="text-[#9F9F9F]">Share</p>
+  </div>
+</div>
+
 
             {/* Share Icons */}
-            <div className="flex gap-2 text-left">
+            <div className="flex gap-2  text-left">
               {/* Facebook Icon */}
 
               <Link href="/Shop">
@@ -271,24 +318,24 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
           {/* Images Section */}
           <div className="flex  flex-wrap -m-4 mt-8">
             <div className="w-full  sm:w-1/2 p-4">
-              <div className="bg-[#F9F1E7] p-6 rounded-lg">
+              <div className=" border-4 border-[#B88E2F] bg-[#f8da96] p-6 rounded-lg">
                 <Image
                   className="rounded w-full object-cover object-center"
                   src="/oursofa.png"
                   alt="Sofa 1"
-                  width={605}
-                  height={348}
+                  width={705}
+                  height={448}
                 />
               </div>
             </div>
             <div className="w-full sm:w-1/2 p-4">
-              <div className="bg-[#F9F1E7] p-6 rounded-lg">
+              <div className="  border-4 border-[#B88E2F] bg-[#f8da96] p-6 rounded-lg">
                 <Image
                   className="rounded w-full object-cover object-center"
                   src="/oursofa1.png"
                   alt="Sofa 2"
-                  width={605}
-                  height={348}
+                  width={705}
+                  height={448}
                 />
               </div>
             </div>
@@ -297,7 +344,6 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
       </section>
 
       {/* Products Section */}
-
       <div className="flex-1 w-full mt-24 pb-28">
         <h1 className="text-center h-auto w-auto  font-Poppins font-[600] text-[36px] text-[#000000] ">
           Related Products
@@ -372,9 +418,8 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
         </div>
       </div>
       <div>
-        <Feature/>
+        <Feature />
       </div>
-   
     </div>
   );
 };

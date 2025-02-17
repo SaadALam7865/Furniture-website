@@ -1,8 +1,7 @@
-
-
 "use client";
 import Image from "next/image";
 import Swal from "sweetalert2";
+
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
@@ -13,6 +12,7 @@ import Feature from "@/components/Feature";
 import { addToCart } from "../action/action";
 import { Product } from "../../../types/products";
 import { useFavourite } from "@/app/wishlist/FavouriteContext";
+import FilterSection from "@/components/FilterSection";
 
 type Products = {
   _id: string;
@@ -37,6 +37,8 @@ const hoverIcons = [
 const Page = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const { addToFavourites } = useFavourite();
+ 
+  
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -116,8 +118,9 @@ const Page = () => {
           </div>
         </div>
       </div>
-
-      <div className="mt-3">
+         {/* ------------------------------- */}
+         <FilterSection/>
+      <div className="mt-8">
         <SearchWithSanity />
       </div>
 
@@ -147,53 +150,83 @@ const Page = () => {
                   </div>
                 )}
 
-                <Link href={`/Shop/${product._id}`} passHref>
-                  <Image
-                    src={product.imageUrl}
-                    alt={product.title}
-                    width={285}
-                    height={301}
-                    className="w-[285px] h-[301px] object-cover rounded-sm mb-4 cursor-pointer"
-                  />
-                </Link>
+                <Image
+                  src={product.imageUrl}
+                  alt={product.title}
+                  width={285}
+                  height={301}
+                  className="w-[285px] h-[301px] object-cover rounded-sm mb-4 cursor-pointer"
+                />
 
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <button
-                    onClick={(e) => handleAddToCart(e, product)}
-                    className="p-2 bg-white text-yellow-600 hover:border-2 hover:border-[#B88E2F] px-10 font-semibold hover:opacity-75 active:opacity-50 transition-all cursor-pointer"
-                  >
-                    Add to cart
-                  </button>
-                  <ul className="flex gap-5 mt-4">
-                    {hoverIcons.map((icon, index) => (
-                      <li
-                        key={index}
-                        className="flex flex-col items-center justify-center text-white hover:opacity-65 active:opacity-40 transition-all cursor-pointer"
-                        onClick={
-                          icon.alt === "Heart"
-                            ? (e) => handleAddToWishlist(e, product)
-                            : undefined
-                        }
+                <Link href={`/Shop/${product._id}`} passHref>
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Link href={`/Cart`}>
+                      <button
+                        onClick={(e) => handleAddToCart(e, product)}
+                        className="p-2 bg-white text-yellow-600 hover:border-2 hover:border-[#B88E2F] px-10 font-semibold hover:opacity-75 active:opacity-50 transition-all cursor-pointer"
                       >
-                        <Image
-                          src={icon.src}
-                          alt={icon.alt}
-                          width={24}
-                          height={24}
-                        />
-                        <p className="text-[14px] font-semibold">{icon.alt}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                        Add to cart
+                      </button>
+                    </Link>
+
+                    <ul className="flex gap-5 mt-4">
+                      {hoverIcons.map((icon, index) => (
+                        <li
+                          key={index}
+                          className="flex flex-col items-center justify-center text-white hover:opacity-65 active:opacity-40 transition-all cursor-pointer"
+                          onClick={
+                            icon.alt === "Heart"
+                              ? (e) => handleAddToWishlist(e, product)
+                              : undefined
+                          }
+                        >
+                          <Image
+                            src={icon.src}
+                            alt={icon.alt}
+                            width={24}
+                            height={24}
+                          />
+                          <p className="text-[14px] font-semibold">
+                            {icon.alt}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Link>
 
                 <h3 className="font-poppins font-semibold text-[24px] text-[#3A3A3A]">
                   {product.title}
                 </h3>
+                <h4>
+                  {product.tags.slice(0, 3).map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[14px] font-semibold text-[#999999] px-2 py-1 rounded-full bg-[#F5F5F5] mr-1"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </h4>
+                <div className="flex flex-row justify-start">
+                {[...Array(4)].map((_, i) => (
+                <svg
+                  key={i}
+                  fill="currentColor"
+             
+                  className="w-4 h-4 text-[#FFAD33]"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              ))}
+                </div>
+
                 <div className="flex items-center gap-3">
                   <h2 className="font-poppins font-semibold text-[20px] text-[#3A3A3A]">
                     Rp {product.price}
                   </h2>
+
                   {product.dicountPercentage > 0 && (
                     <p className="line-through font-poppins font-normal text-[16px] text-[#555555]">
                       Rp{" "}

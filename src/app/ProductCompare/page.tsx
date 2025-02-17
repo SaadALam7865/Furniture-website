@@ -46,13 +46,13 @@ const page = () => {
         <div className="font-poppins flex flex-col gap-6 items-center sm:items-start lg:flex-row lg:justify-around">
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
             <h2 className="font-medium text-[28px]  text-black leading-[35.4px] pb-5">
-              Go to Product <br />
+              Go to Shop <br />
               page for more <br />
-              Products
+              Shopping..
             </h2>
             <div>
               <Link href={"/Shop"}>
-                <button className="text-[#727272] border-b-2 font-medium text-[20px] leading-[30px] hover:scale-105">
+                <button className="text-[#727272] border-b-2 border-[#727272] font-medium text-[20px] leading-[30px] hover:scale-105">
                   View More
                 </button>
               </Link>

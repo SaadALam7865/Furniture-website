@@ -1,4 +1,4 @@
-  "use client";
+"use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,18 +9,18 @@ import { getCartItems } from "../action/action";
 import { client } from "@/sanity/lib/client";
 
 const Page = () => {
-  const [cartItems, setCartItem] = useState<Product[]>([]);
+  const [cartItems, setCartItems] = useState<Product[]>([]);
   const [discount, setDiscount] = useState<number>(0);
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
-    address: "", 
+    address: "",
     country: "",
     city: "",
     province: "",
-    zipcode: "", // Changed from zipCode to match Sanity schema
+    zipcode: "",
     additionalInformation: "",
   });
 
@@ -33,11 +33,11 @@ const Page = () => {
     country: false,
     city: false,
     province: false,
-    zipcode: false, // Updated key
+    zipcode: false,
   });
 
   useEffect(() => {
-    setCartItem(getCartItems());
+    setCartItems(getCartItems());
     const appliedDiscount = localStorage.getItem("appliedDiscount");
     if (appliedDiscount) setDiscount(Number(appliedDiscount));
   }, []);
@@ -47,13 +47,15 @@ const Page = () => {
     0
   );
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues({
-      ...formValues,
-      [e.target.id]: e.target.value,
-    });
-  };
-
+  // Update the type to handle both input and select elements
+    const handleInputChange = (
+     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+) => {
+  setFormValues({
+    ...formValues,
+    [e.target.id]: e.target.value,
+  });
+};
   const validateForm = () => {
     const errors = {
       firstName: !formValues.firstName,
@@ -64,15 +66,25 @@ const Page = () => {
       country: !formValues.country,
       city: !formValues.city,
       province: !formValues.province,
-      zipcode: !formValues.zipcode, // Updated key
+      zipcode: !formValues.zipcode,
     };
     setFormError(errors);
     return Object.values(errors).every((errors) => !errors);
+
   };
 
-  const handlePlaceOrder = async () => {
+   
+
+  const handlePlaceOrder = () => {
     if (!validateForm()) {
-      Swal.fire("Error!", "Please fill all required fields correctly.", "error");
+      Swal.fire({
+        title: "Error!",
+        text: "Please fill out all required fields.",
+        icon: "error",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Okay",
+
+      });
       return;
     }
 
@@ -109,8 +121,8 @@ const Page = () => {
         };
 
         try {
-          await client.create(orderData);
-          localStorage.removeItem("appliedDiscount");
+          await client.create(orderData); // Send the order data to Sanity
+          localStorage.removeItem("appliedDiscount"); // Clear discount after placing the order
           Swal.fire("Success!", "Your order has been successfully processed.", "success");
         } catch (error) {
           console.error("Error creating order:", error);
@@ -175,11 +187,19 @@ const Page = () => {
                       id="firstName"
                       value={formValues.firstName}
                       onChange={handleInputChange}
-                      className="w-full px-2 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
+                      
+                      className="w-full  px-2 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
                     />
-                    <div className={formError.firstName? "text-red-600" : ""}>
-                      {formError.firstName && "First name is required"}
-                    </div>    
+                    <>
+                      {formError.firstName && (
+                        <p className="text-red-500 text-xs">
+                          First name is required
+                        </p>
+                      )}
+                    </>
+                    
+
+                       
                   </div>
                   <div>
                     <label
@@ -195,9 +215,14 @@ const Page = () => {
                       onChange={handleInputChange}
                       className="w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
                     />
-                    <div className={formError.lastName? "text-red-600" : ""}>
-                      {formError.lastName && "Last name is required"}
-                    </div>
+                    <>
+                    {formError.lastName && (
+                        <p className="text-red-500 text-xs">
+                          Last name is required
+                        </p>
+                      )}
+                    </>
+                  
                     
                   </div>
                 </div>
@@ -209,10 +234,13 @@ const Page = () => {
                     Company Name (Optional)
                   </label>
                   <input
+                  
                     type="text"
                     id="company"
+                    
                     className="w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
+                  
                 </div>
                 <div>
                   <label
@@ -223,13 +251,23 @@ const Page = () => {
                   </label>
                   <select
                     id="country"
+                    value={formValues.country}
+                    onChange={handleInputChange}
                     className="w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
                   >
-                    <option value="" > Sri Lanka</option>
+                    <option value="Pakistan" > Pakistan</option>
                     <option value="us">United States</option>
                     <option value="uk">United Kingdom</option>
-                    <option value="ca">Canada</option>
+                    <option value="canada">Canada</option>
+                    <option value='India'>India</option>
                   </select>
+                  <>
+                  {formError.country && (
+                        <p className="text-red-500 text-xs">
+                          Country / Region is required
+                        </p>
+                      )}
+                  </>
                 </div>
                 <div>
                   <label
@@ -245,9 +283,14 @@ const Page = () => {
                     onChange={handleInputChange}
                     className="w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
                   />
-                  <div className={formError.address? "text-red-600" : ""}>
-                      {formError.address && "Address is required"}
-                    </div>
+                  <>
+                  {formError.address && (
+                        <p className="text-red-500 text-xs">
+                          Street address is required
+                        </p>
+                      )}
+                  </>
+                  
                   
                 </div>
 
@@ -267,18 +310,20 @@ const Page = () => {
                     className="w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
                     placeholder="Choose city"
                   />
-                  <div className={formError.city? "text-red-600" : ""}>
-                      {formError.city && "City is required"}
-                    </div>
+                  <>
+                  {formError.city && (
+                        <p className="text-red-500 text-xs">
+                          City is required
+                        </p>
+                      )}
+                  </>
+                 
                   <datalist id="city-list">
-                    <option value="Karachi" className="hover:bg-gray-300" />
-                    <option value="Lahore" className="hover:bg-gray-300" />
+                    <option value="Karachi"  />
+                    <option value="Lahore"  />
                     <option value="Islamabad" />
                     <option value="Rawalpindi" />
                     <option value="Faisalabad" />
-                    <option value="Peshawar" />
-                    <option value="Quetta" />
-                    <option value="Multan" />
                   </datalist>
                 </div>
                 <div>
@@ -289,15 +334,27 @@ const Page = () => {
                     Province
                   </label>
                   <select
-                    id="country"
+                    id="province"
+                    value={formValues.province}
+                    onChange={handleInputChange}
                     className="w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
                   >
 
-                    <option value="">Western Province</option>
-                    <option value="us">Eastern Province</option>
-                    <option value="uk">Northern Province</option>
-                    <option value="ca">Southtern Province</option>
+
+                    <option value="Sindh">Sindh</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Balochistan">Balochistan</option>
+                    <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
+                    <option value="Gilgit Baltistan">Gilgit Baltistan</option>
+                    <option value="Azad Jammu and Kashmir">Azad Jammu Kashmir</option>
                   </select>
+                  <>
+                  {formError.province && (
+                        <p className="text-red-500 text-xs">
+                          Province is required
+                        </p>
+                      )}
+                  </>
                 </div>
                 <div>
                   <label
@@ -313,9 +370,14 @@ const Page = () => {
                     onChange={handleInputChange}
                     className="w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
-                  <div className={formError.zipcode? "text-red-600" : ""}>
-                      {formError.zipcode && "Zip code is required"}
-                    </div>
+                  <>
+                  {formError.zipcode && (
+                        <p className="text-red-500 text-xs">
+                          Zip code is required
+                        </p>
+                      )}
+                  </>
+                  
                   
                 </div>
                 <div>
@@ -332,9 +394,14 @@ const Page = () => {
                     onChange={handleInputChange}
                     className="w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
                   />
-                  <div className={formError.email? "text-red-600" : ""}>
-                      {formError.email && "Email is required"}
-                    </div>
+                  <>
+                    {formError.email && (
+                        <p className="text-red-500 text-xs">
+                          Email address is required and should be valid
+                        </p>
+                      )}
+                  </>
+                 
                   
                 </div>
                 <div>
@@ -351,9 +418,14 @@ const Page = () => {
                     onChange={handleInputChange}
                     className="w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400"
                   />
-                   <div className={formError.phone? "text-red-600" : ""}>
-                      {formError.phone && "Phone number is required"}
-                </div>
+                  <>
+                    {formError.phone && (
+                        <p className="text-red-500 text-xs">
+                          Phone number is required and should be valid
+                        </p>
+                      )}
+                  </>
+                  
                 <div>
                   <label
                     htmlFor="address2"

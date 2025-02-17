@@ -125,7 +125,9 @@ const CartPage = () => {
                     />
                     <div>
                       <p className="font-medium text-gray-700">{item.title}</p>
-                      <p className="text-sm text-gray-500">Rs. {item.price}</p>
+                      <p className="text-sm text-gray-500">Rs. ${item.price}</p>
+                      <p className="text-sm text-gray-500">Quantity: {item.stock}</p>
+                       
                     </div>
                   </div>
                   <div className="flex items-center gap-4">

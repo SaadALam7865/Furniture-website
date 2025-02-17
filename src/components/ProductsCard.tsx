@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { addToCart } from "@/app/action/action";
 import { useFavourite } from "@/app/wishlist/FavouriteContext";
 import { Product } from "../../types/products";
 
@@ -45,6 +46,25 @@ const ProductsCard =  () => {
     fetchProduct()
   },[])
 
+    const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+       e.preventDefault();
+   
+       Swal.fire({
+         position: "top-left",
+         icon: "success",
+         title: `${product.title} added to cart`,
+         imageUrl: `${product.imageUrl}`,
+         imageHeight: 80,
+         imageWidth: 80,
+         showConfirmButton: false,
+         timer: 3500,
+       });
+   
+       addToCart(product);
+     };
+   
+      
+
    const handleAddToWishlist = (e: React.MouseEvent, product:Product) => {
      e.preventDefault();
    Swal.fire({
@@ -60,6 +80,8 @@ const ProductsCard =  () => {
   
       addToFavourites(product);
     };
+
+     
   return (
     <div className="w-full h-auto flex flex-col items-center mt-[100px]">
       {/* Title Section */}
@@ -101,7 +123,9 @@ const ProductsCard =  () => {
             <Link href={`/Shop/${product._id}`} passHref>
             <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <Link href="/Cart">
-                <button className="p-2 bg-white text-yellow-600 hover:border-2 hover:border-[#B88E2F] px-10 font-semibold hover:opacity-75 active:opacity-50 transition-all cursor-pointer">
+                <button
+                 onClick={(e) => handleAddToCart(e, product)}
+                 className="p-2 bg-white text-yellow-600 hover:border-2 hover:border-[#B88E2F] px-10 font-semibold hover:opacity-75 active:opacity-50 transition-all cursor-pointer">
                   Add to Cart
                 </button>
               </Link>
@@ -116,6 +140,8 @@ const ProductsCard =  () => {
                         : undefined
                     }
                   >
+                    
+                    
                     <Image src={icon.src} alt={icon.alt} width={24} height={24} />
                     <p className="text-[14px] font-semibold">{icon.alt}</p>
                   </li>
@@ -126,10 +152,10 @@ const ProductsCard =  () => {
             
 
             {/* Product Title */}
-            <h3 className="font-poppins font-semibold text-[24px] text-[#3A3A3A] text-center mt-4">
+            <h3 className="font-poppins font-semibold text-[24px] text-[#3A3A3A] text-centre  mt-4">
               {product.title}
             </h3>
-
+                
 
             {/* Product Price and Discount Price */}
             <div className="flex items-center justify-center gap-3 mt-2">

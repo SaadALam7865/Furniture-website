@@ -114,7 +114,7 @@ export default function SearchWithSanity() {
                               (product.price * product.discountPercentage) /
                                 100}
                             <span className="text-red-700 ml-9 font-semibold line-through">
-                              {product.price}
+                              ${product.price}
                             </span>
                           </span>
                         ) : (

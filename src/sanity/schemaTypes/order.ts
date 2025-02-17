@@ -1,91 +1,96 @@
 
 
-// schemas/order.js
+import { defineField, defineType } from 'sanity'
 
-export default {
+export default defineType({
   name: 'order',
   title: 'Order',
   type: 'document',
   fields: [
-    {
+    defineField({
       name: 'firstName',
       title: 'First Name',
       type: 'string',
-      
-    },
-    {
+    }),
+    defineField({
       name: 'lastName',
       title: 'Last Name',
       type: 'string',
-      
-    },
-    {
-      name: 'company',
-      title: 'Company Name',
-      type: 'string',
-      description: 'Optional',
-     
-    },
-    {
-      name: 'country',
-      title: 'Country / Region',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Sri Lanka', value: 'Sri Lanka' },
-          { title: 'United States', value: 'us' },
-          { title: 'United Kingdom', value: 'uk' },
-          { title: 'Canada', value: 'ca' },
-        ],
-      },
-    },
-    {
-      name: 'address',
-      title: 'Street Address',
-      type: 'string',
-    
-    },
-    {
-      name: 'city',
-      title: 'City / Town',
-      type: 'string',
-   
-    },
-    {
-      name: 'province',
-      title: 'Province',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Western Province', value: 'Western Province' },
-          { title: 'Eastern Province', value: 'Eastern Province' },
-          { title: 'Northern Province', value: 'Northern Province' },
-          { title: 'Southern Province', value: 'Southern Province' },
-        ],
-      },
-    },
-    {
-      name: 'zipCode',
-      title: 'Zip Code',
-      type: 'string',
-  
-    },
-    {
+    }),
+    defineField({
       name: 'email',
       title: 'Email Address',
       type: 'string',
-     
-    },
-    {
+    }),
+    defineField({
       name: 'phone',
       title: 'Phone Number',
       type: 'string',
-      
-    },
-    {
+    }),
+    defineField({
+      name: 'address',
+      title: 'Street Address',
+      type: 'string',
+    }),
+    defineField({
+      name: 'country',
+      title: 'Country',
+      type: 'string',
+    }),
+    defineField({
+      name: 'city',
+      title: 'City',
+      type: 'string',
+    }),
+    defineField({
+      name: 'province',
+      title: 'Province',
+      type: 'string',
+    }),
+    defineField({
+      name: 'zipcode',
+      title: 'Zipcode',
+      type: 'number',
+    }),
+    defineField({
       name: 'additionalInformation',
       title: 'Additional Information',
+      type: 'text',
+    }),
+    defineField({
+      name: 'cartItems',
+      title: 'Cart Items',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'product' }], // Reference to your 'product' document type
+        },
+      ],
+    }),
+    defineField({
+      name: 'total',
+      title: 'Total Price',
+      type: 'number',
+    }),
+    defineField({
+      name: 'discount',
+      title: 'Discount Applied',
+      type: 'number',
+    }),
+    defineField({
+      name: 'orderDate',
+      title: 'Order Date',
+      type: 'datetime',
+    }),
+    defineField({
+      name: 'status',
+      title: 'Order Status',
       type: 'string',
-    },
+      options: {
+        list: ['pending', 'shipped', 'delivered', 'cancelled'],
+        
+      },
+    }),
   ],
-};
+})

@@ -1,17 +1,16 @@
-"use client";
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
+
+
 import { TiLocation } from 'react-icons/ti';
 import { FaPhone } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa";
 import { IoTimeSharp } from "react-icons/io5";
 import React from 'react';
+import Link from 'next/link';
+import Feature from '@/components/Feature';
 
 const Page = () => {
   return (
     <div>
-      <Header />
-
       <main  className='font-poppins h-[1700px] '  id="contact">
          
         {/* Background Section */}
@@ -33,9 +32,11 @@ const Page = () => {
 
             {/* Breadcrumb Navigation */}
             <div className="flex items-center mt-4">
-              <p className="text-[#000000] font-poppins text-[16px] font-[500]">
+              <Link href='/'>
+              <p className="text-[#000000] hover:underline font-poppins text-[16px] font-[500]">
                 Home
               </p>
+              </Link>
               <FaAngleRight className="mx-2" />
               <p className="text-[#000000] font-poppins text-[16px] font-[300]">
               Contact
@@ -154,70 +155,12 @@ const Page = () => {
 
             </form>
           </div>
-        
         </div>
-
-        {/* ------------------------------------ */}
         {/* Features Section */}
-<div className="flex justify-between py-5 px-3 hover:border-yellow-400 border-2 border-[#9e9a9a] mx-16 mt-36">
-  {/* Feature 1 */}
-  <div className="w-1/5 flex gap-4 items-center">
-    <div className="w-14 h-14">
-      <img src="/Group.png" alt="High Quality" className="w-full h-full object-contain" />
-    </div>
-    <div className="w-full">
-      <h3 className="font-Poppins font-semibold text-xl text-[#242424]">High Quality</h3>
-      <p className="font-Poppins text-base text-[#898989]">Crafted from top materials</p>
-    </div>
-  </div>
-
-  {/* Feature 2 */}
-  <div className="w-1/5 flex gap-4 items-center">
-    <div className="w-14 h-14">
-      <img src="/guarantee.png" alt="Warranty Protection" className="w-full h-full object-contain" />
-    </div>
-    <div className="w-full">
-      <h3 className="font-Poppins font-semibold text-xl text-[#242424]">Warranty Protection</h3>
-      <p className="font-Poppins text-base text-[#898989]">Over 2 years</p>
-    </div>
-  </div>
-
-  {/* Feature 3 */}
-  <div className="w-1/5 flex gap-4 items-center">
-    <div className="w-14 h-14">
-      <img src="/shipping.png" alt="Free Shipping" className="w-full h-full object-contain" />
-    </div>
-    <div className="w-full">
-      <h3 className="font-Poppins font-semibold text-xl text-[#242424]">Free Shipping</h3>
-      <p className="font-Poppins text-base text-[#898989]">Delivered to your door</p>
-    </div>
-  </div>
-
-  {/* Feature 4 */}
-  <div className="w-1/5 flex gap-4 items-center">
-    <div className="w-14 h-14">
-      <img src="/customer-support.png" alt="24/7 Support" className="w-full h-full object-contain" />
-    </div>
-    <div className="w-full">
-      <h3 className="font-Poppins font-semibold text-xl text-[#242424]">24/7 Support</h3>
-      <p className="font-Poppins text-base text-[#898989]">We’re always here to help</p>
-    </div>
-  </div>
-</div>
-
-        
-
-        {/* Footer Section */}
-        <div className="h-screen flex mt-36">
-          <div 
-            className="h-[20%] w-full bg-cover bg-center" 
-            style={{ backgroundImage: "url('/cool.jpg')" }} 
-          ></div>
-        </div>
-
-      </main>
-
-      <Footer />
+       <div className='mt-8'>
+       <Feature/>
+       </div>
+      </main> 
     </div >
   );
 }

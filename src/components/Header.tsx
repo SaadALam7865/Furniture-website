@@ -59,9 +59,7 @@ const Header = () => {
         {/* Icons */}
         <div className="hidden md:flex gap-10">
           <Image src="/user.png" alt="User" height={24} width={24} className="w-[24px] h-[24px] hover:scale-110" />
-          <button >
-            <AiOutlineSearch className="w-[24px] h-[24px] hover:scale-110" />
-          </button>
+           <AiOutlineSearch className="w-[24px] h-[24px] hover:scale-110" />
           <Link href="/wishlist"><FaRegHeart  className="w-[24px] h-[24px] hover:scale-110 hover:text-red-500" /></Link>
           <Link href="/Cart">
             <AiOutlineShoppingCart className="w-[24px] h-[24px] hover:scale-110" />
@@ -110,8 +108,6 @@ const Header = () => {
         </Sheet>
       </div>
 
-      
-      
     </div>
   );
 }

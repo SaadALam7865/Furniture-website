@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import Image from "next/image";
 import { FaTwitter, FaYoutube } from "react-icons/fa";
@@ -37,15 +38,6 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
   });
 
 
-
-
-
-
-
-
-
-
-  
 
   // Fetching products data from Sanity
   const products: TProducts[] = await sanityFetch({ query: relatedProducts });
@@ -205,7 +197,7 @@ const ProductPage = async ({ params }: { params: { id: string } }) => {
               {/* Add to Cart Button */}
               <Link href="/Cart">
                 <button
-                 onClick={(e) => handleAddToCart(e, product)} 
+                  onClick={(e) => handleAddToCart(e, product)}               
                  className="w-full sm:w-[215px] shadow-lg h-[48px] sm:h-[64px] text-sm sm:text-base py-2 sm:py-3 px-4 sm:px-6 border rounded-lg bg-[#B88E2F] text-white border-[#9F9F9F] hover:bg-white hover:text-black hover:border-[#9F9F9F] hover:scale-105 transition-all duration-300 ease-out">
                   Add to Cart
                 </button>
